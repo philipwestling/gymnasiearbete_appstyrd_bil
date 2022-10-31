@@ -6,11 +6,11 @@ void main() {
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Appstyrd Bil',
+      title: "Appstyrd Bil",
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const BluetoothDeactivatedScreen(),
+      home: const FindBluetoothDeviceScreen(),
     ),
   );
 }
