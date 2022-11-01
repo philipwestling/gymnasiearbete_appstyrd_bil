@@ -7,11 +7,13 @@ import 'package:location_permissions/location_permissions.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:provider/provider.dart';
 import 'dart:developer' as dev_tools show log;
+import 'package:flutter/services.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   final flutterReactiveBle = FlutterReactiveBle();
   final bluetoothMonitor = BleStatusMonitor(flutterReactiveBle);
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
   runApp(
     MultiProvider(
