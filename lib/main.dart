@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:gymnasiearbete_appstyrd_bil/bluetooth/state.dart';
 import 'package:gymnasiearbete_appstyrd_bil/screens/bluetooth_deactivated_screen.dart';
 import 'package:gymnasiearbete_appstyrd_bil/screens/find_bluetooth_device_screen.dart';
+import 'package:gymnasiearbete_appstyrd_bil/screens/loading_screen.dart';
 import 'package:location_permissions/location_permissions.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:provider/provider.dart';
-import 'dart:io' show Platform;
+import 'dart:developer' as dev_tools show log;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,14 +37,19 @@ void main() {
 }
 
 class DeciderScreen extends StatelessWidget {
-  DeciderScreen({Key? key}) : super(key: key);
+  const DeciderScreen({Key? key}) : super(key: key);
 
   //TODO - Kolla om Bluetooth är av eller på
 
   @override
   Widget build(BuildContext context) => Consumer<BleStatus?>(
         builder: (_, status, __) {
-          print(FlutterReactiveBle().status);
+          dev_tools.log(status.toString());
+
+          while (status == BleStatus.unknown) {
+            return const LoadingScreen();
+          }
+
           if (status == BleStatus.ready) {
             return const FindBluetoothDeviceScreen();
           } else {

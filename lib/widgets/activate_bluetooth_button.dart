@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gymnasiearbete_appstyrd_bil/constants/colors.dart';
+import 'package:app_settings/app_settings.dart';
 
 Widget activateBluetoothButton(BuildContext context) {
   return ButtonTheme(
@@ -9,6 +10,7 @@ Widget activateBluetoothButton(BuildContext context) {
       ),
       onPressed: () {
         //TODO - Aktivera Bluetooth på enheten
+        AppSettings.openBluetoothSettings();
       },
       child: Row(
         mainAxisSize: MainAxisSize.min,
