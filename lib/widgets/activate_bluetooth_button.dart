@@ -14,7 +14,7 @@ Widget activateBluetoothButton(BuildContext context) {
       ),
       onPressed: () {
         //TODO - Aktivera Bluetooth på enheten
-        //AppSettings.openBluetoothSettings();
+        AppSettings.openBluetoothSettings();
       },
       child: Row(
         mainAxisSize: MainAxisSize.min,
