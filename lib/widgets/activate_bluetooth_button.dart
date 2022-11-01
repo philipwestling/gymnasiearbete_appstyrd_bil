@@ -7,10 +7,14 @@ Widget activateBluetoothButton(BuildContext context) {
     child: ElevatedButton(
       style: ElevatedButton.styleFrom(
         primary: const Color.fromARGB(255, 0, 130, 0),
+        side: const BorderSide(
+          width: 1,
+          color: Color.fromARGB(255, 0, 110, 0),
+        ),
       ),
       onPressed: () {
         //TODO - Aktivera Bluetooth på enheten
-        AppSettings.openBluetoothSettings();
+        //AppSettings.openBluetoothSettings();
       },
       child: Row(
         mainAxisSize: MainAxisSize.min,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gymnasiearbete_appstyrd_bil/bluetooth/state.dart';
+import 'package:gymnasiearbete_appstyrd_bil/constants/colors.dart';
 import 'package:gymnasiearbete_appstyrd_bil/screens/bluetooth_deactivated_screen.dart';
 import 'package:gymnasiearbete_appstyrd_bil/screens/find_bluetooth_device_screen.dart';
 import 'package:gymnasiearbete_appstyrd_bil/screens/loading_screen.dart';
@@ -30,7 +31,7 @@ void main() {
         debugShowCheckedModeBanner: false,
         title: "Appstyrd Bil",
         theme: ThemeData(
-          primarySwatch: Colors.green,
+          primarySwatch: mainColor,
         ),
         home: DeciderScreen(),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gymnasiearbete_appstyrd_bil/constants/colors.dart';
 import 'package:gymnasiearbete_appstyrd_bil/widgets/bluetooth_devices_list.dart';
 
 class FindBluetoothDeviceScreen extends StatelessWidget {
@@ -21,6 +22,7 @@ class FindBluetoothDeviceScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
+        splashColor: findBluetoothDeviceButtonColor,
         child: const Icon(
           Icons.search_rounded,
           size: 34,
