@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-import 'package:gymnasiearbete_appstyrd_bil/constants/bluetooth_uuid.dart';
 import 'package:gymnasiearbete_appstyrd_bil/constants/colors.dart';
 import 'dart:developer' as dev_tools show log;
+
+import 'package:gymnasiearbete_appstyrd_bil/constants/routes.dart';
 
 class FindBluetoothDeviceScreen extends StatefulWidget {
   const FindBluetoothDeviceScreen({Key? key}) : super(key: key);
@@ -37,11 +38,12 @@ class _FindBluetoothDeviceScreenState extends State<FindBluetoothDeviceScreen> {
       dev_tools.log("Searching for bluetooth devices...");
       isScanning = true;
       scanStream = flutterReactiveBle.scanForDevices(
-        withServices: [/*bluetooth_uuid*/],
+        withServices: [],
       ).listen(
         (foundDevice) {
           addToFoundBluetoothDevicesList(foundDevice.name);
-          if (foundDevice.name == "HC-06") {
+          if (foundDevice.name == "Appstyrd bil") {
+            dev_tools.log("Found ${foundDevice.name}");
             deviceOfInterest = foundDevice;
           }
         },
@@ -52,21 +54,20 @@ class _FindBluetoothDeviceScreenState extends State<FindBluetoothDeviceScreen> {
       dev_tools.log("Stop searching for bluetooth devices...");
       isScanning = false;
     }
-
-    //TODO - Kolla om isScanning är true eller false
   }
 
   void connectToDeviceOfInterest() {
+    scanStream.cancel();
     isScanning = false;
     flutterReactiveBle
         .connectToAdvertisingDevice(
       id: deviceOfInterest.id,
-      withServices: serviceUuid,
-      prescanDuration: const Duration(seconds: 10),
-      connectionTimeout: const Duration(seconds: 5),
+      withServices: [],
+      prescanDuration: const Duration(seconds: 2),
+      connectionTimeout: const Duration(seconds: 2),
     )
         .listen(
-      (event) {
+      (event) async {
         switch (event.connectionState) {
           case DeviceConnectionState.connecting:
             {
@@ -76,6 +77,8 @@ class _FindBluetoothDeviceScreenState extends State<FindBluetoothDeviceScreen> {
           case DeviceConnectionState.connected:
             {
               dev_tools.log("Connected to ${deviceOfInterest.name}");
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil(carControlsRoute, (route) => false);
               break;
             }
           case DeviceConnectionState.disconnecting:
@@ -89,6 +92,49 @@ class _FindBluetoothDeviceScreenState extends State<FindBluetoothDeviceScreen> {
               break;
             }
         }
+      },
+      //TODO - onDone:
+    );
+  }
+
+  showConnectDialog(BuildContext context, String deviceName) {
+    const double jaNejSize = 18;
+    return showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Bluetooth anslutning"),
+          content: Text("Vill du ansluta till $deviceName?"),
+          actionsAlignment: MainAxisAlignment.spaceAround,
+          insetPadding: const EdgeInsets.all(50),
+          actions: [
+            TextButton(
+              onPressed: () {
+                //TODO - Anslut till Bluetooth
+                connectToDeviceOfInterest();
+                Navigator.of(context).pop(true);
+              },
+              child: const Text(
+                "Ja",
+                style: TextStyle(
+                  fontSize: jaNejSize,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              child: const Text(
+                "Nej",
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: jaNejSize,
+                ),
+              ),
+            )
+          ],
+        );
       },
     );
   }
@@ -120,7 +166,9 @@ class _FindBluetoothDeviceScreenState extends State<FindBluetoothDeviceScreen> {
                       child: ListTile(
                         title: Text(foundBluetoothDevicesList[index]),
                         onTap: () {
-                          // ShowDialog
+                          //TODO - ShowDialog
+                          showConnectDialog(
+                              context, foundBluetoothDevicesList[index]);
                         },
                       ),
                     );
@@ -130,8 +178,6 @@ class _FindBluetoothDeviceScreenState extends State<FindBluetoothDeviceScreen> {
                   shrinkWrap: true,
                   padding: const EdgeInsets.all(4),
                 ),
-
-                //TODO - bluetooth_devices_list.dart
               ],
             ),
           ),

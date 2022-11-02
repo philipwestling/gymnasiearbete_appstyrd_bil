@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gymnasiearbete_appstyrd_bil/bluetooth/state.dart';
 import 'package:gymnasiearbete_appstyrd_bil/constants/colors.dart';
 import 'package:gymnasiearbete_appstyrd_bil/screens/bluetooth_deactivated_screen.dart';
+import 'package:gymnasiearbete_appstyrd_bil/screens/car_controls_screen.dart';
 import 'package:gymnasiearbete_appstyrd_bil/screens/find_bluetooth_device_screen.dart';
 import 'package:gymnasiearbete_appstyrd_bil/screens/loading_screen.dart';
+import 'package:gymnasiearbete_appstyrd_bil/constants/routes.dart';
 import 'package:location_permissions/location_permissions.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:provider/provider.dart';
@@ -32,8 +34,12 @@ void main() {
         ),
       ],
       child: MaterialApp(
+        routes: {
+          carControlsRoute: (context) => const CarControls(),
+          findDevicesRoute: (context) => const FindBluetoothDeviceScreen(),
+        },
         debugShowCheckedModeBanner: false,
-        title: "Appstyrd Bil",
+        title: "Gymnasiearbete appstyrd bil",
         theme: ThemeData(
           primarySwatch: mainColor,
         ),
