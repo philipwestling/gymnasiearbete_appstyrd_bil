@@ -11,9 +11,13 @@ import 'dart:developer' as dev_tools show log;
 import 'package:flutter/services.dart';
 
 void main() {
+  //
   WidgetsFlutterBinding.ensureInitialized();
+
   final flutterReactiveBle = FlutterReactiveBle();
   final bluetoothMonitor = BleStatusMonitor(flutterReactiveBle);
+
+  // Gömmer Android "Navigation Bar"
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
   runApp(
@@ -33,7 +37,7 @@ void main() {
         theme: ThemeData(
           primarySwatch: mainColor,
         ),
-        home: DeciderScreen(),
+        home: const DeciderScreen(),
       ),
     ),
   );
