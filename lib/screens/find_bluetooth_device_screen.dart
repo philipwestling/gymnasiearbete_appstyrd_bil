@@ -16,31 +16,78 @@ class FindBluetoothDeviceScreen extends StatefulWidget {
 class _FindBluetoothDeviceScreenState extends State<FindBluetoothDeviceScreen> {
   var foundBluetoothDevicesList = <String>[];
   final flutterReactiveBle = FlutterReactiveBle();
-  late StreamSubscription<DiscoveredDevice> bluetoothScanStream;
   late DiscoveredDevice deviceOfInterest;
+  late StreamSubscription<DiscoveredDevice> scanStream;
+  bool isScanning = false;
 
   void addToFoundBluetoothDevicesList(String foundDevice) {
-    if (foundBluetoothDevicesList.contains(foundDevice) ||
-        foundBluetoothDevicesList.contains("")) {
+    if (foundBluetoothDevicesList.contains(foundDevice)) {
       return;
     } else {
-      setState(() {
-        foundBluetoothDevicesList.add(foundDevice);
-      });
+      setState(
+        () {
+          foundBluetoothDevicesList.add(foundDevice);
+        },
+      );
     }
   }
 
   void bluetoothScan() {
-    flutterReactiveBle.scanForDevices(
-      withServices: [/*bluetooth_uuid*/],
-    ).listen(
-      (foundDevice) {
-        dev_tools.log(
-          foundDevice.name,
-        );
-        addToFoundBluetoothDevicesList(foundDevice.name);
-        if (foundDevice.name == "HC-06") {
-          deviceOfInterest = foundDevice;
+    if (isScanning == false) {
+      dev_tools.log("Searching for bluetooth devices...");
+      isScanning = true;
+      scanStream = flutterReactiveBle.scanForDevices(
+        withServices: [/*bluetooth_uuid*/],
+      ).listen(
+        (foundDevice) {
+          addToFoundBluetoothDevicesList(foundDevice.name);
+          if (foundDevice.name == "HC-06") {
+            deviceOfInterest = foundDevice;
+          }
+        },
+      );
+    } else {
+      scanStream.cancel();
+      foundBluetoothDevicesList.length = 0;
+      dev_tools.log("Stop searching for bluetooth devices...");
+      isScanning = false;
+    }
+
+    //TODO - Kolla om isScanning är true eller false
+  }
+
+  void connectToDeviceOfInterest() {
+    isScanning = false;
+    flutterReactiveBle
+        .connectToAdvertisingDevice(
+      id: deviceOfInterest.id,
+      withServices: serviceUuid,
+      prescanDuration: const Duration(seconds: 10),
+      connectionTimeout: const Duration(seconds: 5),
+    )
+        .listen(
+      (event) {
+        switch (event.connectionState) {
+          case DeviceConnectionState.connecting:
+            {
+              dev_tools.log("Connecting to ${deviceOfInterest.name}");
+              break;
+            }
+          case DeviceConnectionState.connected:
+            {
+              dev_tools.log("Connected to ${deviceOfInterest.name}");
+              break;
+            }
+          case DeviceConnectionState.disconnecting:
+            {
+              dev_tools.log("Disconnecting from ${deviceOfInterest.name}");
+              break;
+            }
+          case DeviceConnectionState.disconnected:
+            {
+              dev_tools.log("Disconnected from ${deviceOfInterest.name}");
+              break;
+            }
         }
       },
     );
@@ -92,16 +139,20 @@ class _FindBluetoothDeviceScreenState extends State<FindBluetoothDeviceScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          dev_tools.log("Searching for bluetooth devices...");
           setState(() {
             bluetoothScan();
           });
         },
         splashColor: findBluetoothDeviceButtonColor,
-        child: const Icon(
-          Icons.search_rounded,
-          size: 34,
-        ),
+        child: isScanning
+            ? const Icon(
+                Icons.cancel,
+                size: 34,
+              )
+            : const Icon(
+                Icons.search_rounded,
+                size: 34,
+              ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

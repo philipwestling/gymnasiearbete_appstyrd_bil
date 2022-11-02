@@ -14,11 +14,11 @@ void main() {
   //
   WidgetsFlutterBinding.ensureInitialized();
 
-  final flutterReactiveBle = FlutterReactiveBle();
-  final bluetoothMonitor = BleStatusMonitor(flutterReactiveBle);
-
   // Gömmer Android "Navigation Bar"
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
+  final flutterReactiveBle = FlutterReactiveBle();
+  final bluetoothMonitor = BleStatusMonitor(flutterReactiveBle);
 
   runApp(
     MultiProvider(
@@ -45,8 +45,6 @@ void main() {
 
 class DeciderScreen extends StatelessWidget {
   const DeciderScreen({Key? key}) : super(key: key);
-
-  //TODO - Kolla om Bluetooth är av eller på
 
   @override
   Widget build(BuildContext context) => Consumer<BleStatus?>(
