@@ -1,7 +1,6 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-import 'package:gymnasiearbete_appstyrd_bil/bluetooth/state.dart';
+import 'package:gymnasiearbete_appstyrd_bil/bluetooth/variables.dart';
 import 'package:gymnasiearbete_appstyrd_bil/constants/colors.dart';
 import 'dart:developer' as dev_tools show log;
 
@@ -16,17 +15,6 @@ class FindBluetoothDeviceScreen extends StatefulWidget {
 }
 
 class _FindBluetoothDeviceScreenState extends State<FindBluetoothDeviceScreen> {
-  var foundBluetoothDevicesList = <String>[];
-  final flutterReactiveBle = FlutterReactiveBle();
-  final Uuid serviceUuid = Uuid.parse(
-    "19B10000-E8F2-537E-4F6C-D104768A1214",
-  );
-  final Uuid characteristicUuid = Uuid.parse(
-    "19B10001-E8F2-537E-4F6C-D104768A1214",
-  );
-  late StreamSubscription<DiscoveredDevice> scanStream;
-  bool isScanning = false;
-
   void addToFoundBluetoothDevicesList(String foundDevice) {
     if (foundBluetoothDevicesList.contains(foundDevice)) {
       return;
