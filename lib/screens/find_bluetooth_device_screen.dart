@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
+import 'package:gymnasiearbete_appstyrd_bil/bluetooth/state.dart';
 import 'package:gymnasiearbete_appstyrd_bil/constants/colors.dart';
 import 'dart:developer' as dev_tools show log;
 
@@ -17,7 +18,12 @@ class FindBluetoothDeviceScreen extends StatefulWidget {
 class _FindBluetoothDeviceScreenState extends State<FindBluetoothDeviceScreen> {
   var foundBluetoothDevicesList = <String>[];
   final flutterReactiveBle = FlutterReactiveBle();
-  late DiscoveredDevice deviceOfInterest;
+  final Uuid serviceUuid = Uuid.parse(
+    "19B10000-E8F2-537E-4F6C-D104768A1214",
+  );
+  final Uuid characteristicUuid = Uuid.parse(
+    "19B10001-E8F2-537E-4F6C-D104768A1214",
+  );
   late StreamSubscription<DiscoveredDevice> scanStream;
   bool isScanning = false;
 
@@ -42,8 +48,8 @@ class _FindBluetoothDeviceScreenState extends State<FindBluetoothDeviceScreen> {
       ).listen(
         (foundDevice) {
           addToFoundBluetoothDevicesList(foundDevice.name);
-          if (foundDevice.name == "Appstyrd bil") {
-            dev_tools.log("Found ${foundDevice.name}");
+          if (foundDevice.name == "Arduino UNO WIFI REV2") {
+            dev_tools.log("Found ${foundDevice.name}!");
             deviceOfInterest = foundDevice;
           }
         },
@@ -71,12 +77,12 @@ class _FindBluetoothDeviceScreenState extends State<FindBluetoothDeviceScreen> {
         switch (event.connectionState) {
           case DeviceConnectionState.connecting:
             {
-              dev_tools.log("Connecting to ${deviceOfInterest.name}");
+              dev_tools.log("Connecting to ${deviceOfInterest.name}...");
               break;
             }
           case DeviceConnectionState.connected:
             {
-              dev_tools.log("Connected to ${deviceOfInterest.name}");
+              dev_tools.log("Connected to ${deviceOfInterest.name}!");
               Navigator.of(context)
                   .pushNamedAndRemoveUntil(carControlsRoute, (route) => false);
               break;
