@@ -2,9 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:gymnasiearbete_appstyrd_bil/constants/colors.dart';
 import 'package:gymnasiearbete_appstyrd_bil/widgets/activate_bluetooth_button.dart';
 
-class BluetoothDeactivatedScreen extends StatelessWidget {
+class BluetoothDeactivatedScreen extends StatefulWidget {
   const BluetoothDeactivatedScreen({Key? key}) : super(key: key);
 
+  @override
+  State<BluetoothDeactivatedScreen> createState() =>
+      _BluetoothDeactivatedScreenState();
+}
+
+class _BluetoothDeactivatedScreenState
+    extends State<BluetoothDeactivatedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +37,7 @@ class BluetoothDeactivatedScreen extends StatelessWidget {
             ),
             Container(
               child: activateBluetoothButton(context),
-            )
+            ),
           ],
         ),
       ),
