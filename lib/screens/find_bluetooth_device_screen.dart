@@ -3,6 +3,7 @@ import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:gymnasiearbete_appstyrd_bil/bluetooth/variables.dart';
 import 'package:gymnasiearbete_appstyrd_bil/constants/colors.dart';
 import 'dart:developer' as dev_tools show log;
+import 'package:flutter/services.dart';
 
 import 'package:gymnasiearbete_appstyrd_bil/constants/routes.dart';
 
@@ -15,6 +16,9 @@ class FindBluetoothDeviceScreen extends StatefulWidget {
 }
 
 class _FindBluetoothDeviceScreenState extends State<FindBluetoothDeviceScreen> {
+  bool isScanning = false;
+
+  // Lägg till hittad Bluetoothenhet i en lista
   void addToFoundBluetoothDevicesList(String foundDevice) {
     if (foundBluetoothDevicesList.contains(foundDevice)) {
       return;
@@ -27,12 +31,13 @@ class _FindBluetoothDeviceScreenState extends State<FindBluetoothDeviceScreen> {
     }
   }
 
-  void bluetoothScan() {
+  // Börja skanna efter Bluetoothenheter
+  void bluetoothScan() async {
     if (isScanning == false) {
       dev_tools.log("Searching for bluetooth devices...");
       isScanning = true;
       scanStream = flutterReactiveBle.scanForDevices(
-        withServices: [],
+        withServices: [serviceUuid],
       ).listen(
         (foundDevice) {
           addToFoundBluetoothDevicesList(foundDevice.name);
@@ -43,15 +48,15 @@ class _FindBluetoothDeviceScreenState extends State<FindBluetoothDeviceScreen> {
         },
       );
     } else {
-      scanStream.cancel();
-      foundBluetoothDevicesList.length = 0;
+      await scanStream.cancel();
+      foundBluetoothDevicesList.clear();
       dev_tools.log("Stop searching for bluetooth devices...");
       isScanning = false;
     }
   }
 
-  void connectToDeviceOfInterest() {
-    scanStream.cancel();
+  void connectToDeviceOfInterest() async {
+    await scanStream.cancel();
     isScanning = false;
     flutterReactiveBle
         .connectToAdvertisingDevice(
@@ -71,7 +76,12 @@ class _FindBluetoothDeviceScreenState extends State<FindBluetoothDeviceScreen> {
           case DeviceConnectionState.connected:
             {
               dev_tools.log("Connected to ${deviceOfInterest.name}!");
-              Navigator.of(context)
+
+              // Liggande skärm för bättre kontrollyta i "car_controls_screen"
+              SystemChrome.setPreferredOrientations(
+                [DeviceOrientation.landscapeLeft],
+              );
+              await Navigator.of(context)
                   .pushNamedAndRemoveUntil(carControlsRoute, (route) => false);
               break;
             }
@@ -87,7 +97,7 @@ class _FindBluetoothDeviceScreenState extends State<FindBluetoothDeviceScreen> {
             }
         }
       },
-      //TODO - onDone:
+      // TODO - onError:
     );
   }
 
@@ -104,7 +114,6 @@ class _FindBluetoothDeviceScreenState extends State<FindBluetoothDeviceScreen> {
           actions: [
             TextButton(
               onPressed: () {
-                //TODO - Anslut till Bluetooth
                 connectToDeviceOfInterest();
                 Navigator.of(context).pop(true);
               },

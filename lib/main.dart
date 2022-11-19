@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gymnasiearbete_appstyrd_bil/bluetooth/state.dart';
+import 'package:gymnasiearbete_appstyrd_bil/bluetooth/variables.dart';
 import 'package:gymnasiearbete_appstyrd_bil/constants/colors.dart';
 import 'package:gymnasiearbete_appstyrd_bil/screens/car_controls_screen.dart';
 import 'package:gymnasiearbete_appstyrd_bil/screens/decider_screen.dart';
@@ -16,8 +16,10 @@ void main() {
   // Gömmer Android "Navigation Bar"
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
-  final flutterReactiveBle = FlutterReactiveBle();
-  final bluetoothMonitor = BleStatusMonitor(flutterReactiveBle);
+  // Säkerställer att bilden presenteras på korrekt sätt
+  SystemChrome.setPreferredOrientations(
+    [DeviceOrientation.portraitUp],
+  );
 
   runApp(
     MultiProvider(
@@ -38,7 +40,7 @@ void main() {
           findDevicesRoute: (context) => const FindBluetoothDeviceScreen(),
         },
         debugShowCheckedModeBanner: false,
-        title: "Gymnasiearbete appstyrd bil",
+        title: "Gymnasiearbete Appstyrd Bil",
         theme: ThemeData(
           primarySwatch: mainColor,
         ),

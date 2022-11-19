@@ -18,6 +18,7 @@ class DeciderScreen extends StatelessWidget {
             return const LoadingScreen();
           }
 
+          // TODO - Lägg till villkor för flera olika errors, t.ex "Unauthorized"
           if (status == BleStatus.ready) {
             return const FindBluetoothDeviceScreen();
           } else {
