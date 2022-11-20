@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:gymnasiearbete_appstyrd_bil/screens/bluetooth_deactivated_screen.dart';
-import 'package:gymnasiearbete_appstyrd_bil/screens/car_controls_screen.dart';
 import 'package:gymnasiearbete_appstyrd_bil/screens/find_bluetooth_device_screen.dart';
 import 'package:gymnasiearbete_appstyrd_bil/screens/loading_screen.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +22,7 @@ class DeciderScreen extends StatelessWidget {
           if (status == BleStatus.ready) {
             return const FindBluetoothDeviceScreen();
           } else {
-            return const CarControls();
+            return const BluetoothDeactivatedScreen();
           }
         },
       );

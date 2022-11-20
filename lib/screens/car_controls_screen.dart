@@ -4,6 +4,7 @@ import 'package:gymnasiearbete_appstyrd_bil/bluetooth/variables.dart';
 import 'dart:developer' as dev_tools show log;
 import 'package:flutter/services.dart';
 import 'package:gymnasiearbete_appstyrd_bil/constants/colors.dart';
+import 'package:vibration/vibration.dart';
 
 class CarControls extends StatefulWidget {
   const CarControls({Key? key}) : super(key: key);
@@ -118,6 +119,7 @@ class _CarControlsState extends State<CarControls> {
                     splashColor: transparentColor,
                     onTap: () {
                       dev_tools.log("Throttle pedal tap");
+                      Vibration.vibrate(duration: 100);
                     },
                     child: Image.asset(
                       "lib/assets/images/throttle_pedal.png",

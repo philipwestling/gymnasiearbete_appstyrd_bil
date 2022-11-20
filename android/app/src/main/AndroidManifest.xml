@@ -22,6 +22,8 @@
     <uses-permission
             android:name="android.permission.BLUETOOTH_SCAN"
             android:usesPermissionFlags="neverForLocation" />
+        
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:label="gymnasiearbete_appstyrd_bil"
