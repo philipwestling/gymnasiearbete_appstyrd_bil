@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gymnasiearbete_appstyrd_bil/bluetooth/variables.dart';
 import 'package:flutter/services.dart';
+import 'package:gymnasiearbete_appstyrd_bil/constants/colors.dart';
 import 'package:gymnasiearbete_appstyrd_bil/widgets/steering.dart';
+import 'dart:developer' as dev_tools show log;
 
 class CarControls extends StatefulWidget {
   const CarControls({Key? key}) : super(key: key);
@@ -85,7 +87,7 @@ class _CarControlsState extends State<CarControls> {
             // Gas, broms och styrning
             Container(
               margin: const EdgeInsets.fromLTRB(0, 100, 0, 0),
-              child: carSteeringWidget,
+              child: carSteeringWidget(context),
             )
           ],
         ),
