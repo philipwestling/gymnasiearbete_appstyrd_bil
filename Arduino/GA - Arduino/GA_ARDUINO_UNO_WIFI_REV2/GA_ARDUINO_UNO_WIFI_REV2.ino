@@ -11,8 +11,8 @@ L293D Motor Driver Shield
 HS-755HB Servo
 DC-motorer 6V (4 stycken)
 Robothjul 65mm (4 stycken)
-LiPo 18650 3.7V|2200mAh (2 stycken)
-1.5V AA-batterier (4 stycken)
+LiPo 18650 3.7V|2200mAh (2 stycken) - Seriekopplade
+1.5V AA-batterier (4 stycken) - Seriekopplade
 
 */
 
