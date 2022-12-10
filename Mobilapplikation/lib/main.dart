@@ -10,9 +10,6 @@ import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-  //
-  WidgetsFlutterBinding.ensureInitialized();
-
   // Gömmer Android "Navigation Bar"
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
