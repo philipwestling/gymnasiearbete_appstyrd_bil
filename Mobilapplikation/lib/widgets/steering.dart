@@ -18,7 +18,7 @@ Widget carSteeringWidget(BuildContext context) {
           onPressed: () {
             flutterReactiveBle.writeCharacteristicWithResponse(
               characteristic,
-              value: [0x12],
+              value: [0x1],
             );
           },
           icon: const Icon(
@@ -38,7 +38,7 @@ Widget carSteeringWidget(BuildContext context) {
           onPressed: () {
             flutterReactiveBle.writeCharacteristicWithResponse(
               characteristic,
-              value: [0x13],
+              value: [0x2],
             );
           },
           icon: const Icon(

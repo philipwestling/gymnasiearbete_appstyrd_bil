@@ -19,16 +19,14 @@ LiPo 18650 3.7V|2200mAh (2 stycken) - Seriekopplade
 #include <Wire.h>
 #include <ArduinoBLE.h>
 
-BLEService appstyrdBilService("19B10000-E8F2-537E-4F6C-D104768A1214");  // Bluetooth® Low Energy LED Service
+// Bluetooth® Low Energy LED Service
+BLEService appstyrdBilService("19B10000-E8F2-537E-4F6C-D104768A1214");  
 
 // Bluetooth® Low Energy LED Switch Characteristic - custom 128-bit UUID, read and writable by central
 BLEByteCharacteristic switchCharacteristic("19B10001-E8F2-537E-4F6C-D104768A1214", BLERead | BLEWrite);
 
-
-
-
 // Lampor fram
-const int highBeamleft = A0;
+const int highBeamLeft = A0;
 const int highBeamRight = A1;
 const int lowBeamLeft = 2;
 const int lowBeamRight = 3;
@@ -80,17 +78,16 @@ void setup() {
   // Lampor
   for (int i = 2; i < 13; i++) {
     pinMode(i, OUTPUT);
-    Serial.println(i);
   }
   pinMode(A0, OUTPUT);
   pinMode(A1, OUTPUT);
+
+  // Halvljus konstant på
+  digitalWrite(lowBeamLeft, 1);
+  digitalWrite(lowBeamRight, 1);
 }
 
 void loop() {
-  turnSignalLeft();
-  delay(1000);
-  turnSignalRight();
-  delay(1000);
   BLEDevice central = BLE.central();
   if (central) {
     Serial.println("Connected to " + central.address());
@@ -99,16 +96,36 @@ void loop() {
 
       if (switchCharacteristic.written()) {
         dataFromPhone = switchCharacteristic.value();
-        Wire.beginTransmission(1);
+        Serial.println(dataFromPhone);
+        switch (dataFromPhone) {
+          case 1:
+            turnSignalLeft();
+            break;
+          case 2:
+            turnSignalRight();
+            break;
+          case 3:
+            highBeamOnOff();
+            break;
+        }
+        /*Wire.beginTransmission(1);
         Wire.write(dataFromPhone);
         delay(50);
-        Wire.endTransmission();
+        Wire.endTransmission();*/
       }
     }
     Serial.println("Disconnected from " + central.address());
   }
 }
 
+// Helljus
+void highBeamOnOff() {
+  Serial.println(digitalRead(highBeamLeft));
+  digitalWrite(highBeamLeft, !digitalRead(highBeamLeft));
+  digitalWrite(highBeamRight, !digitalRead(highBeamRight));
+}
+
+// INTE FÄRDIG
 void turnSignalLeft() {
   int x = 0;
   while (x < 3) {
@@ -124,6 +141,7 @@ void turnSignalLeft() {
   }
 }
 
+// INTE FÄRDIG
 void turnSignalRight() {
   int x = 0;
   while (x < 3) {
@@ -137,4 +155,12 @@ void turnSignalRight() {
     delay(turnSignalDelayTime);
     x++;
   }
+}
+
+
+void brakeLights() {
+}
+
+
+void reverseLight() {
 }

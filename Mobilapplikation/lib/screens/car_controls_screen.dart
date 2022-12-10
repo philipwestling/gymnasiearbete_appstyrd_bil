@@ -13,7 +13,7 @@ class CarControls extends StatefulWidget {
 }
 
 class _CarControlsState extends State<CarControls> {
-  bool isLedOn = false;
+  bool isHighBeamOn = false;
 
   // TODO: TA BORT EFTER DEBUG FÄRDIG
   @override
@@ -24,24 +24,6 @@ class _CarControlsState extends State<CarControls> {
     );
 
     super.initState();
-  }
-
-  void ledOn() {
-    flutterReactiveBle.writeCharacteristicWithResponse(
-      characteristic,
-      // Hexadecimal
-      value: [0x01],
-    );
-    isLedOn = !isLedOn;
-  }
-
-  void ledOff() {
-    flutterReactiveBle.writeCharacteristicWithResponse(
-      characteristic,
-      // Hexadecimal
-      value: [0x00],
-    );
-    isLedOn = !isLedOn;
   }
 
   @override
@@ -58,18 +40,15 @@ class _CarControlsState extends State<CarControls> {
               ),
               child: IconButton(
                 onPressed: () {
-                  setState(
-                    () {
-                      if (!isLedOn) {
-                        ledOn();
-                      } else {
-                        ledOff();
-                      }
-                    },
-                  );
+                  setState(() {
+                    flutterReactiveBle.writeCharacteristicWithResponse(
+                        characteristic,
+                        value: [0x3]);
+                    isHighBeamOn = !isHighBeamOn;
+                  });
                 },
                 iconSize: 50,
-                icon: isLedOn
+                icon: isHighBeamOn
                     ? const Icon(
                         Icons.lightbulb,
                         color: Colors.amber,
@@ -82,7 +61,7 @@ class _CarControlsState extends State<CarControls> {
                       ),
               ),
             ),
-            isLedOn ? const Text("Led På") : const Text("Led Av"),
+            isHighBeamOn ? const Text("Helljus På") : const Text("Helljus Av"),
 
             // Gas, broms och styrning
             Container(
