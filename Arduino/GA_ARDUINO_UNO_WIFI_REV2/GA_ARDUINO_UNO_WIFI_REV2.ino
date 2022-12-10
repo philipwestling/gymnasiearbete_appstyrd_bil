@@ -18,14 +18,23 @@ LiPo 18650 3.7V|2200mAh (2 stycken) - Seriekopplade
 
 #include <Wire.h>
 
+
 void setup() {
+  Serial.begin(9600);
+  Wire.begin();
   // Lampor
 
 }
 
 void loop() {
+  for (int i = 0; i < 256; i++) {
+    Wire.beginTransmission(1);
+    Wire.write(i);
+    Serial.println(i);
+    Wire.endTransmission();
+    delay(100);
+  }
   
-
 }
 
 void turnSignal() {

@@ -1,4 +1,4 @@
-/* 
+  /* 
 
 Denna kod exekveras på Arduino UNO, och fungerar som en "slave-device" till 
 Arduino UNO WiFi Rev2 som skickar insignaler via följande bibliotek 
@@ -28,9 +28,13 @@ AF_DCMotor frontRight(3);
 AF_DCMotor rearRight(2);
 AF_DCMotor rearLeft(1);
 
+int receiver;
+
 void setup() {
   Serial.begin(9600);
   servoSteering.attach(A0);
+  Wire.begin(1);
+  Wire.onReceive(dataReceieve);
 }
 
 void loop() {
@@ -40,11 +44,17 @@ void loop() {
 
 }
 
+void dataReceieve() {
+  receiver = Wire.read();
+  
+  Serial.println(receiver);
+}
+
 void forward() {
-  frontRight.setSpeed(255);
-  frontLeft.setSpeed(255);
-  rearRight.setSpeed(255);
-  rearLeft.setSpeed(255);
+  frontRight.setSpeed(receiver);
+  frontLeft.setSpeed(receiver);
+  rearRight.setSpeed(receiver);
+  rearLeft.setSpeed(receiver);
   frontRight.run(FORWARD);
   frontLeft.run(FORWARD);
   rearLeft.run(FORWARD);
