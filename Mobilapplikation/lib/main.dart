@@ -10,6 +10,9 @@ import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 
 void main() {
+  // Ser till att allting laddas in innan appen börjar fråga efter information
+  WidgetsFlutterBinding.ensureInitialized();
+
   // Gömmer Android "Navigation Bar"
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 

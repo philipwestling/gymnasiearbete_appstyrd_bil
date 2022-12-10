@@ -24,7 +24,34 @@ BLEService appstyrdBilService("19B10000-E8F2-537E-4F6C-D104768A1214");  // Bluet
 // Bluetooth® Low Energy LED Switch Characteristic - custom 128-bit UUID, read and writable by central
 BLEByteCharacteristic switchCharacteristic("19B10001-E8F2-537E-4F6C-D104768A1214", BLERead | BLEWrite);
 
+
+
+
+// Lampor fram
+const int highBeamleft = A0;
+const int highBeamRight = A1;
+const int lowBeamLeft = 2;
+const int lowBeamRight = 3;
+const int frontTurnSignalLeft = 4;
+const int frontTurnSignalRight = 5;
+
+// Lampor sida
+const int sideTurnSignalLeft = 6;
+const int sideTurnSignalRight = 7;
+
+// Lampor bak
+const int rearTurnSignalLeft = 8;
+const int rearTurnSignalRight = 9;
+const int brakeLightLeft = 10;
+const int brakeLightRight = 11;
+const int reverseLight = 12;
+
+// Lampor övrigt
+const int turnSignalDelayTime = 600;
+
+// Data från telefonen sparas i denna variabel
 int dataFromPhone;
+
 
 void setup() {
   Serial.begin(9600);
@@ -51,14 +78,25 @@ void setup() {
   BLE.advertise();
 
   // Lampor
+  for (int i = 2; i < 13; i++) {
+    pinMode(i, OUTPUT);
+    Serial.println(i);
+  }
+  pinMode(A0, OUTPUT);
+  pinMode(A1, OUTPUT);
 }
 
 void loop() {
+  turnSignalLeft();
+  delay(1000);
+  turnSignalRight();
+  delay(1000);
   BLEDevice central = BLE.central();
   if (central) {
     Serial.println("Connected to " + central.address());
 
     while (central.connected()) {
+
       if (switchCharacteristic.written()) {
         dataFromPhone = switchCharacteristic.value();
         Wire.beginTransmission(1);
@@ -71,5 +109,32 @@ void loop() {
   }
 }
 
-void turnSignal() {
+void turnSignalLeft() {
+  int x = 0;
+  while (x < 3) {
+    digitalWrite(frontTurnSignalLeft, 1);
+    digitalWrite(sideTurnSignalLeft, 1);
+    digitalWrite(rearTurnSignalLeft, 1);
+    delay(turnSignalDelayTime);
+    digitalWrite(frontTurnSignalLeft, 0);
+    digitalWrite(sideTurnSignalLeft, 0);
+    digitalWrite(rearTurnSignalLeft, 0);
+    delay(turnSignalDelayTime);
+    x++;
+  }
+}
+
+void turnSignalRight() {
+  int x = 0;
+  while (x < 3) {
+    digitalWrite(frontTurnSignalRight, 1);
+    digitalWrite(sideTurnSignalRight, 1);
+    digitalWrite(rearTurnSignalRight, 1);
+    delay(turnSignalDelayTime);
+    digitalWrite(frontTurnSignalRight, 0);
+    digitalWrite(sideTurnSignalRight, 0);
+    digitalWrite(rearTurnSignalRight, 0);
+    delay(turnSignalDelayTime);
+    x++;
+  }
 }

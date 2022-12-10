@@ -39,7 +39,7 @@ class _FindBluetoothDeviceScreenState extends State<FindBluetoothDeviceScreen> {
       scanStream = flutterReactiveBle.scanForDevices(withServices: []).listen(
         (foundDevice) {
           addToFoundBluetoothDevicesList(foundDevice.name);
-          if (foundDevice.name == "Arduino UNO WIFI REV2") {
+          if (foundDevice.name == "Appstyrd Bil") {
             dev_tools.log("Found ${foundDevice.name}!");
             deviceOfInterest = foundDevice;
           }
