@@ -17,26 +17,59 @@ LiPo 18650 3.7V|2200mAh (2 stycken) - Seriekopplade
 */
 
 #include <Wire.h>
+#include <ArduinoBLE.h>
 
+BLEService appstyrdBilService("19B10000-E8F2-537E-4F6C-D104768A1214");  // Bluetooth® Low Energy LED Service
+
+// Bluetooth® Low Energy LED Switch Characteristic - custom 128-bit UUID, read and writable by central
+BLEByteCharacteristic switchCharacteristic("19B10001-E8F2-537E-4F6C-D104768A1214", BLERead | BLEWrite);
+
+int dataFromPhone;
 
 void setup() {
   Serial.begin(9600);
   Wire.begin();
-  // Lampor
+  if (!BLE.begin()) {
+    Serial.println("Kunde inte starta bluetoothmodul!");
 
+    while (true)
+      ;
+  } else {
+    Serial.println("Startar bluetoothmodul!");
+  }
+
+  // add the characteristic to the service
+  appstyrdBilService.addCharacteristic(switchCharacteristic);
+
+  BLE.setLocalName("Appstyrd Bil");
+  BLE.setAdvertisedService(appstyrdBilService);
+
+  // add service
+  BLE.addService(appstyrdBilService);
+
+  // start advertising
+  BLE.advertise();
+
+  // Lampor
 }
 
 void loop() {
-  for (int i = 0; i < 256; i++) {
-    Wire.beginTransmission(1);
-    Wire.write(i);
-    Serial.println(i);
-    Wire.endTransmission();
-    delay(100);
+  BLEDevice central = BLE.central();
+  if (central) {
+    Serial.println("Connected to " + central.address());
+
+    while (central.connected()) {
+      if (switchCharacteristic.written()) {
+        dataFromPhone = switchCharacteristic.value();
+        Wire.beginTransmission(1);
+        Wire.write(dataFromPhone);
+        delay(50);
+        Wire.endTransmission();
+      }
+    }
+    Serial.println("Disconnected from " + central.address());
   }
-  
 }
 
 void turnSignal() {
-
 }
