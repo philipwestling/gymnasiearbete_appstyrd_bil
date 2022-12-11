@@ -1,4 +1,4 @@
-  /* 
+/* 
 
 Denna kod exekveras på Arduino UNO, och fungerar som en "slave-device" till 
 Arduino UNO WiFi Rev2 som skickar insignaler via följande bibliotek 
@@ -23,38 +23,55 @@ LiPo 18650 3.7V|2200mAh (2 stycken) - Seriekopplade
 #include <AFMotor.h>
 #include <Wire.h>
 Servo servoSteering;
-AF_DCMotor frontLeft(4);
-AF_DCMotor frontRight(3);
-AF_DCMotor rearRight(2);
-AF_DCMotor rearLeft(1);
+AF_DCMotor frontLeft(2);
+AF_DCMotor frontRight(1);
+AF_DCMotor rearRight(4);
+AF_DCMotor rearLeft(3);
+Servo servo;
 
 int receiver;
 
 void setup() {
   Serial.begin(9600);
-  servoSteering.attach(A0);
+  servo.attach(A0);
   Wire.begin(1);
   Wire.onReceive(dataReceieve);
 }
 
 void loop() {
-  
-  // switch-operator beroende på insignal från UNO WiFi 
-  
+  /*servo.write(90);  // Mitten
+  delay(2500);
+  servo.write(70);
+  delay(2500);
+  servo.write(90);
+  delay(2500);
+  servo.write(110);
+  delay(2500);*/
+ 
 
+
+  // switch-operator beroende på insignal från UNO WiFi
+  forward();
+  delay(3000);
+  brake();
+  delay(2000);
+  backward();
+  delay(3000);
+  brake();
+  delay(2000);
 }
 
 void dataReceieve() {
   receiver = Wire.read();
-  
+
   Serial.println(receiver);
 }
 
 void forward() {
-  frontRight.setSpeed(receiver);
-  frontLeft.setSpeed(receiver);
-  rearRight.setSpeed(receiver);
-  rearLeft.setSpeed(receiver);
+  frontRight.setSpeed(200);
+  frontLeft.setSpeed(200);
+  rearRight.setSpeed(200);
+  rearLeft.setSpeed(200);
   frontRight.run(FORWARD);
   frontLeft.run(FORWARD);
   rearLeft.run(FORWARD);
@@ -73,11 +90,9 @@ void backward() {
 }
 
 void left() {
-  
 }
 
 void right() {
-
 }
 
 void brake() {
