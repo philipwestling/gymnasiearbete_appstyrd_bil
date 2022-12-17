@@ -23,11 +23,18 @@ LiPo 18650 3.7V|2200mAh (2 stycken) - Seriekopplade
 #include <AFMotor.h>
 #include <Wire.h>
 Servo servoSteering;
+<<<<<<< Updated upstream
 AF_DCMotor frontLeft(2);
 AF_DCMotor frontRight(1);
 AF_DCMotor rearRight(4);
 AF_DCMotor rearLeft(3);
 Servo servo;
+=======
+AF_DCMotor frontLeft(1);
+AF_DCMotor frontRight(4);
+AF_DCMotor rearRight(3);
+AF_DCMotor rearLeft(2);
+>>>>>>> Stashed changes
 
 int receiver;
 
@@ -39,6 +46,7 @@ void setup() {
 }
 
 void loop() {
+<<<<<<< Updated upstream
   /*servo.write(90);  // Mitten
   delay(2500);
   servo.write(70);
@@ -59,11 +67,29 @@ void loop() {
   delay(3000);
   brake();
   delay(2000);
+=======
+  
+  // switch-operator beroende på insignal från UNO WiFi 
+  switch (receiver) {
+    case 1:
+      servoSteering.write(100);
+      break;
+    case 2:
+      servoSteering.write(60);
+      break;
+  }
+  
+  
+
+>>>>>>> Stashed changes
 }
 
 void dataReceieve() {
   receiver = Wire.read();
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
   Serial.println(receiver);
 }
 
@@ -104,16 +130,7 @@ void brake() {
 
 
 
-void servoSteeringTest() {
-  servoSteering.write(82);  // Mitten
-  delay(1000);
-  servoSteering.write(62);  // Vänster
-  delay(1000);
-  servoSteering.write(82);  // Mitten
-  delay(1000);
-  servoSteering.write(102);  // Höger
-  delay(1000);
-}
+
 
 void motorDriveTest() {
   frontRight.setSpeed(200);

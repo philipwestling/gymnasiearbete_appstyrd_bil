@@ -20,7 +20,7 @@ LiPo 18650 3.7V|2200mAh (2 stycken) - Seriekopplade
 #include <ArduinoBLE.h>
 
 // Bluetooth® Low Energy LED Service
-BLEService appstyrdBilService("19B10000-E8F2-537E-4F6C-D104768A1214");  
+BLEService appstyrdBilService("19B10000-E8F2-537E-4F6C-D104768A1214");
 
 // Bluetooth® Low Energy LED Switch Characteristic - custom 128-bit UUID, read and writable by central
 BLEByteCharacteristic switchCharacteristic("19B10001-E8F2-537E-4F6C-D104768A1214", BLERead | BLEWrite);
@@ -99,23 +99,33 @@ void loop() {
         Serial.println(dataFromPhone);
         switch (dataFromPhone) {
           case 1:
-            turnSignalLeft();
+            sendDataToUNO();
             break;
           case 2:
-            turnSignalRight();
+            sendDataToUNO();
             break;
           case 3:
-            highBeamOnOff();
+            sendDataToUNO();
+            break;
+          case 4:
+            sendDataToUNO();
+            break;
+          default:
             break;
         }
-        /*Wire.beginTransmission(1);
-        Wire.write(dataFromPhone);
-        delay(50);
-        Wire.endTransmission();*/
+        
       }
     }
     Serial.println("Disconnected from " + central.address());
   }
+}
+
+void sendDataToUNO() {
+  Wire.beginTransmission(1);
+  Wire.write(dataFromPhone);
+  dataFromPhone = 0;
+  delay(50);
+  Wire.endTransmission();
 }
 
 // Helljus
@@ -162,5 +172,5 @@ void brakeLights() {
 }
 
 
-void reverseLight() {
+void reverseLightActivate() {
 }

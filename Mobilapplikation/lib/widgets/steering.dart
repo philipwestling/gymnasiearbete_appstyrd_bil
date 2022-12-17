@@ -7,42 +7,46 @@ Widget carSteeringWidget(BuildContext context) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.end,
     children: [
-      // Vänster pil
+      // Sväng vänster
       Container(
-        margin: const EdgeInsets.only(right: 50),
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.red,
-        ),
-        child: IconButton(
-          onPressed: () {
+        margin: const EdgeInsets.only(right: 52),
+        child: InkWell(
+          // Tar bort "skugga" som lägger sig runt png-ytan
+          highlightColor: transparentColor,
+          splashColor: transparentColor,
+          onTap: () {
+            dev_tools.log("Sväng vänster");
             flutterReactiveBle.writeCharacteristicWithResponse(
               characteristic,
-              value: [0x1],
+              value: [0x01],
             );
           },
-          icon: const Icon(
-            Icons.arrow_left,
+          child: Image.asset(
+            // https://www.pngall.com/steering-wheel-png/download/51522
+            "lib/assets/images/steering_wheel_left.png",
+            scale: 6,
           ),
         ),
       ),
 
-      // Höger pil
+      // Sväng höger
       Container(
-        margin: const EdgeInsets.only(right: 510),
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.red,
-        ),
-        child: IconButton(
-          onPressed: () {
+        margin: const EdgeInsets.only(right: 340),
+        child: InkWell(
+          // Tar bort "skugga" som lägger sig runt png-ytan
+          highlightColor: transparentColor,
+          splashColor: transparentColor,
+          onTap: () {
+            dev_tools.log("Sväng höger");
             flutterReactiveBle.writeCharacteristicWithResponse(
               characteristic,
-              value: [0x2],
+              value: [0x02],
             );
           },
-          icon: const Icon(
-            Icons.arrow_right,
+          child: Image.asset(
+            // https://www.pngall.com/steering-wheel-png/download/51522
+            "lib/assets/images/steering_wheel_right.png",
+            scale: 6,
           ),
         ),
       ),
@@ -55,13 +59,14 @@ Widget carSteeringWidget(BuildContext context) {
           highlightColor: transparentColor,
           splashColor: transparentColor,
           onTap: () {
-            dev_tools.log("Brake pedal tap");
+            dev_tools.log("Bromspedal");
             flutterReactiveBle.writeCharacteristicWithResponse(
               characteristic,
-              value: [0x10],
+              value: [0x03],
             );
           },
           child: Image.asset(
+            // https://pixabay.com/vectors/pedals-car-machine-gas-throttle-4519485/
             "lib/assets/images/brake_pedal.png",
             scale: 2,
           ),
@@ -73,7 +78,7 @@ Widget carSteeringWidget(BuildContext context) {
         ),
       ),
 
-      //Gaspedal
+      // Gaspedal
       Container(
         padding: const EdgeInsets.only(right: 10),
         child: InkWell(
@@ -81,13 +86,14 @@ Widget carSteeringWidget(BuildContext context) {
           highlightColor: transparentColor,
           splashColor: transparentColor,
           onTap: () {
-            dev_tools.log("Throttle pedal tap");
+            dev_tools.log("Gaspedal");
             flutterReactiveBle.writeCharacteristicWithResponse(
               characteristic,
-              value: [0x11],
+              value: [0x04],
             );
           },
           child: Image.asset(
+            // https://pixabay.com/vectors/pedals-car-machine-gas-throttle-4519485/
             "lib/assets/images/throttle_pedal.png",
             scale: 2,
           ),
