@@ -29,8 +29,8 @@ AF_DCMotor frontRight(1);
 AF_DCMotor rearRight(4);
 AF_DCMotor rearLeft(3);
 Servo servo;
-=======
-AF_DCMotor frontLeft(1);
+== == == =
+  AF_DCMotor frontLeft(1);
 AF_DCMotor frontRight(4);
 AF_DCMotor rearRight(3);
 AF_DCMotor rearLeft(2);
@@ -46,30 +46,9 @@ void setup() {
 }
 
 void loop() {
-<<<<<<< Updated upstream
-  /*servo.write(90);  // Mitten
-  delay(2500);
-  servo.write(70);
-  delay(2500);
-  servo.write(90);
-  delay(2500);
-  servo.write(110);
-  delay(2500);*/
- 
 
 
   // switch-operator beroende på insignal från UNO WiFi
-  forward();
-  delay(3000);
-  brake();
-  delay(2000);
-  backward();
-  delay(3000);
-  brake();
-  delay(2000);
-=======
-  
-  // switch-operator beroende på insignal från UNO WiFi 
   switch (receiver) {
     case 1:
       servoSteering.write(100);
@@ -78,18 +57,11 @@ void loop() {
       servoSteering.write(60);
       break;
   }
-  
-  
-
->>>>>>> Stashed changes
 }
 
 void dataReceieve() {
   receiver = Wire.read();
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
   Serial.println(receiver);
 }
 
