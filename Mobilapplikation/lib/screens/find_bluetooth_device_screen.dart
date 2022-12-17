@@ -54,6 +54,7 @@ class _FindBluetoothDeviceScreenState extends State<FindBluetoothDeviceScreen> {
   }
 
   void connectToDeviceOfInterest() async {
+    await Future.delayed(const Duration(milliseconds: 200));
     await scanStream.cancel();
     isScanning = false;
     flutterReactiveBle
@@ -73,6 +74,7 @@ class _FindBluetoothDeviceScreenState extends State<FindBluetoothDeviceScreen> {
             }
           case DeviceConnectionState.connected:
             {
+              await flutterReactiveBle.clearGattCache(deviceOfInterest.id);
               dev_tools.log("Connected to ${deviceOfInterest.name}!");
 
               // Liggande skärm för bättre kontrollyta i "car_controls_screen"

@@ -45,12 +45,14 @@ void loop() {
   // switch-operator beroende på insignal från UNO WiFi
   switch (receiver) {
     case 1:
-      servoSteering.write(100);
+      left();
       break;
     case 2:
-      servoSteering.write(60);
+      right();
       break;
     case 3:
+      break;
+    case 4:
       forward();
       break;
   }
@@ -85,9 +87,11 @@ void backward() {
 }
 
 void left() {
+  servoSteering.write(100);
 }
 
 void right() {
+  servoSteering.write(60);
 }
 
 void brake() {
@@ -101,24 +105,4 @@ void brake() {
 
 
 
-void motorDriveTest() {
-  frontRight.setSpeed(200);
-  frontLeft.setSpeed(200);
-  rearLeft.setSpeed(200);
-  rearRight.setSpeed(200);
-  frontRight.run(FORWARD);
-  frontLeft.run(FORWARD);
-  rearLeft.run(FORWARD);
-  rearRight.run(FORWARD);
-  delay(2000);
-  frontRight.run(BACKWARD);
-  frontLeft.run(BACKWARD);
-  rearLeft.run(BACKWARD);
-  rearRight.run(BACKWARD);
-  delay(2000);
-  frontRight.run(RELEASE);
-  frontLeft.run(RELEASE);
-  rearLeft.run(RELEASE);
-  rearRight.run(RELEASE);
-  delay(2000);
-}
+
