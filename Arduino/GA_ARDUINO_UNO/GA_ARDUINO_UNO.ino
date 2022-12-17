@@ -23,24 +23,18 @@ LiPo 18650 3.7V|2200mAh (2 stycken) - Seriekopplade
 #include <AFMotor.h>
 #include <Wire.h>
 Servo servoSteering;
-<<<<<<< Updated upstream
-AF_DCMotor frontLeft(2);
-AF_DCMotor frontRight(1);
-AF_DCMotor rearRight(4);
-AF_DCMotor rearLeft(3);
-Servo servo;
-== == == =
-  AF_DCMotor frontLeft(1);
+
+AF_DCMotor frontLeft(1);
 AF_DCMotor frontRight(4);
 AF_DCMotor rearRight(3);
 AF_DCMotor rearLeft(2);
->>>>>>> Stashed changes
+
 
 int receiver;
 
 void setup() {
   Serial.begin(9600);
-  servo.attach(A0);
+  servoSteering.attach(A0);
   Wire.begin(1);
   Wire.onReceive(dataReceieve);
 }
@@ -55,6 +49,9 @@ void loop() {
       break;
     case 2:
       servoSteering.write(60);
+      break;
+    case 3:
+      forward();
       break;
   }
 }
