@@ -53,7 +53,7 @@ int dataFromPhone;
 
 void setup() {
   Serial.begin(9600);
-  Wire.begin();
+  Wire.begin(1);
   if (!BLE.begin()) {
     Serial.println("Kunde inte starta bluetoothmodul!");
 
@@ -93,11 +93,22 @@ void loop() {
     Serial.println("Connected to " + central.address());
 
     while (central.connected()) {
+    
 
       if (switchCharacteristic.written()) {
-        dataFromPhone = switchCharacteristic.value();
-        Serial.println(dataFromPhone);
-        switch (dataFromPhone) {
+        if (switchCharacteristic.value()) {
+          dataFromPhone = switchCharacteristic.value();
+          Serial.println(dataFromPhone);
+
+          if (dataFromPhone == 1) {
+            Serial.println("Turn left");
+            sendDataToUNO();
+          }
+          else {
+            return;
+          }
+        }
+        /*switch (dataFromPhone) {
           case 1:
             sendDataToUNO();
             break;
@@ -112,7 +123,7 @@ void loop() {
             break;
           default:
             break;
-        }
+        }*/
         
       }
     }
@@ -124,8 +135,8 @@ void sendDataToUNO() {
   Wire.beginTransmission(1);
   Wire.write(dataFromPhone);
   dataFromPhone = 0;
-  delay(50);
-  Wire.endTransmission();
+  delay(200);
+  Wire.endTransmission(1);
 }
 
 // Helljus

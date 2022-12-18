@@ -14,9 +14,9 @@ Widget carSteeringWidget(BuildContext context) {
           // Tar bort "skugga" som lägger sig runt png-ytan
           highlightColor: transparentColor,
           splashColor: transparentColor,
-          onTap: () {
+          onTap: () async {
             dev_tools.log("Sväng vänster");
-            flutterReactiveBle.writeCharacteristicWithResponse(
+            await flutterReactiveBle.writeCharacteristicWithResponse(
               characteristic,
               value: [0x01],
             );
@@ -36,9 +36,9 @@ Widget carSteeringWidget(BuildContext context) {
           // Tar bort "skugga" som lägger sig runt png-ytan
           highlightColor: transparentColor,
           splashColor: transparentColor,
-          onTap: () {
+          onTap: () async {
             dev_tools.log("Sväng höger");
-            flutterReactiveBle.writeCharacteristicWithResponse(
+            await flutterReactiveBle.writeCharacteristicWithResponse(
               characteristic,
               value: [0x02],
             );
@@ -58,9 +58,9 @@ Widget carSteeringWidget(BuildContext context) {
           // Tar bort "skugga" som lägger sig runt png-ytan
           highlightColor: transparentColor,
           splashColor: transparentColor,
-          onTap: () {
+          onTap: () async {
             dev_tools.log("Bromspedal");
-            flutterReactiveBle.writeCharacteristicWithResponse(
+            await flutterReactiveBle.writeCharacteristicWithResponse(
               characteristic,
               value: [0x03],
             );
@@ -85,9 +85,9 @@ Widget carSteeringWidget(BuildContext context) {
           // Tar bort "skugga" som lägger sig runt png-ytan
           highlightColor: transparentColor,
           splashColor: transparentColor,
-          onTap: () {
+          onTap: () async {
             dev_tools.log("Gaspedal");
-            flutterReactiveBle.writeCharacteristicWithResponse(
+            await flutterReactiveBle.writeCharacteristicWithResponse(
               characteristic,
               value: [0x04],
             );
