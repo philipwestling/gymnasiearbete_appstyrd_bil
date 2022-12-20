@@ -62,7 +62,7 @@ Widget carSteeringWidget(BuildContext context) {
             dev_tools.log("Bromspedal");
             await flutterReactiveBle.writeCharacteristicWithResponse(
               characteristic,
-              value: [0x03],
+              value: [0x04],
             );
           },
           child: Image.asset(
@@ -89,7 +89,7 @@ Widget carSteeringWidget(BuildContext context) {
             dev_tools.log("Gaspedal");
             await flutterReactiveBle.writeCharacteristicWithResponse(
               characteristic,
-              value: [0x04],
+              value: [0x03],
             );
           },
           child: Image.asset(

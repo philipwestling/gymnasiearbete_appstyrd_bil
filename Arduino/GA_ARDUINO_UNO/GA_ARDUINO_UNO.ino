@@ -33,35 +33,44 @@ AF_DCMotor rearLeft(2);
 int receiver;
 
 void setup() {
+  Wire.begin(4);
+  Wire.onReceive(dataReceieve);
   Serial.begin(9600);
   servoSteering.attach(A0);
-  Wire.begin(1);
-  Wire.onReceive(dataReceieve);
+  
 }
 
 void loop() {
-
+    delay(100);
 
   // switch-operator beroende på insignal från UNO WiFi
-  switch (receiver) {
-    case 1:
-      left();
-      break;
-    case 2:
-      right();
-      break;
-    case 3:
-      break;
-    case 4:
-      forward();
-      break;
-  }
+  
 }
 
 void dataReceieve() {
   receiver = Wire.read();
-
   Serial.println(receiver);
+
+  switch (receiver) {
+    case 1:
+      Serial.println("Left");
+      left();
+      break;
+    case 2:
+      Serial.println("Right");
+      right();
+      break;
+    case 3:
+      Serial.println("Forward");
+      forward();
+      break;
+    case 4:
+      Serial.println("Brake");
+      brake();
+      break;
+
+  }
+  
 }
 
 void forward() {
@@ -87,11 +96,11 @@ void backward() {
 }
 
 void left() {
-  servoSteering.write(100);
+  servoSteering.write(140);
 }
 
 void right() {
-  servoSteering.write(60);
+  servoSteering.write(80);
 }
 
 void brake() {
