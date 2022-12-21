@@ -43,8 +43,9 @@ void setup() {
 
 void loop() {
   delay(100);
-
   
+
+
 
   // switch-operator beroende på insignal från UNO WiFi
 }
@@ -55,44 +56,31 @@ void dataReceieve() {
   Serial.println(receiver);
   if (receiver > 79 && receiver < 161) {
     servoSteering.write(receiver);
-  }
+  } else {
     switch (receiver) {
-    case 1:
-      Serial.println("Left \n");
-      left();
-      break;
-    case 2:
-      Serial.println("Straight \n");
-      straight();
-      break;
-    case 3:
-      Serial.println("Right \n");
-      right();
-      break;
-    case 4:
-      Serial.println("Brake \n");
-      brake();
-      break;
-    case 5:
-      Serial.println("Forward \n");
-      forward();
-      break;
-    case 6:
-      Serial.println("Backward \n");
-      backward();
-      break;
-    default:
-      break;
+      case 4:
+        Serial.println("Brake \n");
+        brake();
+        break;
+      case 5:
+        Serial.println("Forward \n");
+        forward();
+        break;
+      case 6:
+        Serial.println("Backward \n");
+        backward();
+        break;
+      default:
+        break;
+    }
   }
-  
-  
 }
 
 void forward() {
-  frontRight.setSpeed(200);
-  frontLeft.setSpeed(200);
-  rearRight.setSpeed(200);
-  rearLeft.setSpeed(200);
+  frontRight.setSpeed(255);
+  frontLeft.setSpeed(255);
+  rearRight.setSpeed(255);
+  rearLeft.setSpeed(255);
   frontRight.run(FORWARD);
   frontLeft.run(FORWARD);
   rearLeft.run(FORWARD);

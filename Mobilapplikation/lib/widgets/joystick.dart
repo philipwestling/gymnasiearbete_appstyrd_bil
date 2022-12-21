@@ -7,22 +7,18 @@ import 'package:num_remap/num_remap.dart';
 Widget carSteeringWidget(BuildContext context) {
   double leftOrRight;
   double mappedLeftOrRight;
+
   return Row(
     children: [
       Joystick(
-        mode: JoystickMode.horizontal,
+        mode: JoystickMode.all,
         period: const Duration(milliseconds: 200),
         listener: ((details) {
           leftOrRight = double.parse(details.x.toStringAsFixed(2));
+          mappedLeftOrRight =
+              mappedLeftOrRight = leftOrRight.remap(1, -1, 80, 160);
 
-          mappedLeftOrRight = leftOrRight.remap(1, -1, 80, 160);
           sendToUnoWifi(mappedLeftOrRight.toInt());
-
-          /*if (leftOrRight > 0) {
-            sendToUnoWifi(3);
-          } else if (leftOrRight < 0) {
-            sendToUnoWifi(1);
-          }*/
         }),
       ),
     ],

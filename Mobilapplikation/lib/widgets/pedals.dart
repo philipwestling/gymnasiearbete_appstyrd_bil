@@ -1,10 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:gymnasiearbete_appstyrd_bil/bluetooth/methods.dart';
 import 'package:gymnasiearbete_appstyrd_bil/constants/colors.dart';
 import 'package:gymnasiearbete_appstyrd_bil/widgets/gears.dart';
 import 'dart:developer' as dev_tools show log;
 
+import 'package:num_remap/num_remap.dart';
+
 Widget carPedalWidget(BuildContext context) {
+  int x = 200;
   return Row(
     children: [
       // Bromspedal
@@ -35,6 +40,7 @@ Widget carPedalWidget(BuildContext context) {
         // Tar bort "skugga" som lägger sig runt png-ytan
         highlightColor: transparentColor,
         splashColor: transparentColor,
+
         onTap: () async {
           dev_tools.log("Gaspedal");
           if (isInNeutral == false) {
