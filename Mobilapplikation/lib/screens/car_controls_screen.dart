@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gymnasiearbete_appstyrd_bil/widgets/gears.dart';
 import 'package:gymnasiearbete_appstyrd_bil/widgets/pedals.dart';
 import 'package:gymnasiearbete_appstyrd_bil/widgets/joystick.dart';
 import 'dart:developer' as dev_tools show log;
@@ -33,9 +34,13 @@ class _CarControlsState extends State<CarControls> {
               children: [
                 carSteeringWidget(context),
                 const SizedBox(
-                  width: 450,
+                  width: 400,
                 ),
                 carPedalWidget(context),
+                SizedBox(
+                  width: 10,
+                ),
+                gearsWidget(context),
               ],
             ),
           ],
