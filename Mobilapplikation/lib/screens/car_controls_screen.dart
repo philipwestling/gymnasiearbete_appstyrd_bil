@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gymnasiearbete_appstyrd_bil/widgets/pedals.dart';
+import 'package:gymnasiearbete_appstyrd_bil/widgets/joystick.dart';
 import 'dart:developer' as dev_tools show log;
-
-import 'package:gymnasiearbete_appstyrd_bil/widgets/steering.dart';
 
 class CarControls extends StatefulWidget {
   const CarControls({Key? key}) : super(key: key);
@@ -34,7 +33,7 @@ class _CarControlsState extends State<CarControls> {
               children: [
                 carSteeringWidget(context),
                 const SizedBox(
-                  width: 470,
+                  width: 450,
                 ),
                 carPedalWidget(context),
               ],

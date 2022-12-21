@@ -53,8 +53,11 @@ void dataReceieve() {
 
   receiver = Wire.read();
   Serial.println(receiver);
-
-  switch (receiver) {
+  if (79 < receiver < 161) {
+    servoSteering.write(receiver);
+  }
+  else {
+    switch (receiver) {
     case 1:
       Serial.println("Left \n");
       left();
@@ -82,6 +85,8 @@ void dataReceieve() {
     default:
       break;
   }
+  }
+  
 }
 
 void forward() {
