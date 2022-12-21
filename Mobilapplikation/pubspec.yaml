@@ -37,7 +37,7 @@ dependencies:
   provider: ^6.0.4
   app_settings: ^4.1.8
   flutter_reactive_ble: ^5.0.2
-  flutter_joystick: ^0.0.2
+  flutter_joystick: ^0.0.3
   toggle_switch: ^2.0.1
   num_remap: ^1.0.1
   flutter_launcher_icons: ^0.11.0

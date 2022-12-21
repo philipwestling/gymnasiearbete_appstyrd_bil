@@ -86,6 +86,9 @@ void setup() {
   // Halvljus konstant på
   digitalWrite(lowBeamLeft, 1);
   digitalWrite(lowBeamRight, 1);
+
+  // Bromsljus aktiverade i början för att visa att bilen står still och väntar på kommandon
+  brakeLightsActivate();
 }
 
 void loop() {
@@ -101,12 +104,38 @@ void loop() {
           dataFromPhone = switchCharacteristic.value();
           Serial.println(dataFromPhone);
           sendDataToUNO();
+          switch (dataFromPhone) {
+            case 4:
+              brakeLightsActivate();
+              break;
+            case 5:
+              brakeLightsDeactivate();
+              break;
+            case 6:
+              brakeLightsDeactivate();
+              reverseLightActivate();
+              break;
+            case 7:
+              highBeamOnOff();
+              break;
+            case 8:
+              turnSignalLeft();
+              break;
+            case 9:
+              turnSignalRight();
+              break;
+            case 10:
+              reverseLightActivate();
+              break;
+            case 11:
+              reverseLightDeactivate();
+              break;
+          }
         }
       }
     }
     Serial.println("Disconnected from " + central.address());
   }
-  
 }
 
 void sendDataToUNO() {
@@ -141,7 +170,7 @@ void turnSignalLeft() {
 // INTE FÄRDIG
 void turnSignalRight() {
   int x = 0;
-  while (x < 3) {
+  while (true) {
     digitalWrite(frontTurnSignalRight, 1);
     digitalWrite(sideTurnSignalRight, 1);
     digitalWrite(rearTurnSignalRight, 1);
@@ -155,9 +184,21 @@ void turnSignalRight() {
 }
 
 
-void brakeLights() {
+void brakeLightsActivate() {
+  digitalWrite(brakeLightLeft, 1);
+  digitalWrite(brakeLightRight, 1);
+}
+
+void brakeLightsDeactivate() {
+  digitalWrite(brakeLightLeft, 0);
+  digitalWrite(brakeLightRight, 0);
 }
 
 
 void reverseLightActivate() {
+  digitalWrite(reverseLight, 1);
+}
+
+void reverseLightDeactivate() {
+  digitalWrite(reverseLight, 0);
 }
