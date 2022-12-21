@@ -106,6 +106,18 @@ void loop() {
     }
     Serial.println("Disconnected from " + central.address());
   }
+  //testSendDataToUNO();
+}
+
+void testSendDataToUNO() {
+  Wire.beginTransmission(4);
+  Wire.write(5);
+  Wire.endTransmission();
+  delay(1000);
+  Wire.beginTransmission(4);
+  Wire.write(180);
+  Wire.endTransmission();
+  delay(1000);
 }
 
 void sendDataToUNO() {

@@ -37,40 +37,51 @@ void setup() {
   Wire.onReceive(dataReceieve);
   Serial.begin(9600);
   servoSteering.attach(A0);
-  
+  // Centrera servon
+  servoSteering.write(95);
 }
 
 void loop() {
-    delay(100);
+  delay(100);
+
+  
 
   // switch-operator beroende på insignal från UNO WiFi
-  
 }
 
 void dataReceieve() {
+
   receiver = Wire.read();
   Serial.println(receiver);
 
   switch (receiver) {
     case 1:
-      Serial.println("Left");
+      Serial.println("Left \n");
       left();
       break;
     case 2:
-      Serial.println("Right");
-      right();
+      Serial.println("Straight \n");
+      straight();
       break;
     case 3:
-      Serial.println("Forward");
-      forward();
+      Serial.println("Right \n");
+      right();
       break;
     case 4:
-      Serial.println("Brake");
+      Serial.println("Brake \n");
       brake();
       break;
-
+    case 5:
+      Serial.println("Forward \n");
+      forward();
+      break;
+    case 6:
+      Serial.println("Backward \n");
+      backward();
+      break;
+    default:
+      break;
   }
-  
 }
 
 void forward() {
@@ -96,11 +107,15 @@ void backward() {
 }
 
 void left() {
-  servoSteering.write(140);
+  servoSteering.write(160);
 }
 
 void right() {
   servoSteering.write(80);
+}
+
+void straight() {
+  servoSteering.write(95);
 }
 
 void brake() {
@@ -109,9 +124,3 @@ void brake() {
   rearLeft.run(RELEASE);
   rearRight.run(RELEASE);
 }
-
-
-
-
-
-

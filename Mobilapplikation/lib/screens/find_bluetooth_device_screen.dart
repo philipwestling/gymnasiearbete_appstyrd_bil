@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-import 'package:gymnasiearbete_appstyrd_bil/bluetooth/variables.dart';
+import 'package:gymnasiearbete_appstyrd_bil/bluetooth/setup.dart';
 import 'package:gymnasiearbete_appstyrd_bil/constants/colors.dart';
 import 'dart:developer' as dev_tools show log;
 import 'package:flutter/services.dart';

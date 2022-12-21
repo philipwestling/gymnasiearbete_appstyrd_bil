@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gymnasiearbete_appstyrd_bil/bluetooth/variables.dart';
+import 'package:gymnasiearbete_appstyrd_bil/bluetooth/setup.dart';
 import 'package:gymnasiearbete_appstyrd_bil/constants/colors.dart';
 import 'package:gymnasiearbete_appstyrd_bil/screens/car_controls_screen.dart';
 import 'package:gymnasiearbete_appstyrd_bil/screens/decider_screen.dart';
