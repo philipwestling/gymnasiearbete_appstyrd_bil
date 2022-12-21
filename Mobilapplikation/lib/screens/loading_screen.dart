@@ -14,7 +14,7 @@ class LoadingScreen extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Text("Loading"),
+            Text("Läser in"),
           ],
         ),
       ),

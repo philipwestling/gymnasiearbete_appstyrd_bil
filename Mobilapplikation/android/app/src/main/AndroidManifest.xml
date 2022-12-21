@@ -26,7 +26,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
-        android:label="gymnasiearbete_appstyrd_bil"
+        android:label="Appstyrd Bil"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
