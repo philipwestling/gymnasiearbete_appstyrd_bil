@@ -170,7 +170,7 @@ void turnSignalLeft() {
 // INTE FÄRDIG
 void turnSignalRight() {
   int x = 0;
-  while (true) {
+  while (x < 3) {
     digitalWrite(frontTurnSignalRight, 1);
     digitalWrite(sideTurnSignalRight, 1);
     digitalWrite(rearTurnSignalRight, 1);

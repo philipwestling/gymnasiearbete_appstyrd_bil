@@ -11,11 +11,10 @@ Widget carSteeringWidget(BuildContext context) {
   return Row(
     children: [
       Joystick(
-        mode: JoystickMode.all,
+        mode: JoystickMode.horizontal,
         period: const Duration(milliseconds: 200),
         listener: ((details) {
           leftOrRight = double.parse(details.x.toStringAsFixed(2));
-          print(leftOrRight);
           mappedLeftOrRight =
               mappedLeftOrRight = leftOrRight.remap(1, -1, 80, 160);
 

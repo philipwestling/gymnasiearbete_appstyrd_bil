@@ -7,7 +7,9 @@ bool isInNeutral = true;
 
 Widget gearsWidget(BuildContext context) {
   return ToggleSwitch(
-    minWidth: 50,
+    cornerRadius: 40,
+    minWidth: 60,
+    minHeight: 60,
     radiusStyle: true,
     initialLabelIndex: 1,
     totalSwitches: 3,
