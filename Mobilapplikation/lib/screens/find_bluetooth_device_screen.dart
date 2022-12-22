@@ -144,6 +144,9 @@ class _FindBluetoothDeviceScreenState extends State<FindBluetoothDeviceScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp],
+    );
     return Scaffold(
       backgroundColor: Colors.blue,
       appBar: AppBar(
