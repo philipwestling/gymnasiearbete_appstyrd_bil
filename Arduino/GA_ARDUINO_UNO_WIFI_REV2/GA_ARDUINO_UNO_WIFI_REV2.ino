@@ -84,11 +84,11 @@ void setup() {
   pinMode(A1, OUTPUT);
 
   // Halvljus konstant på
-  digitalWrite(lowBeamLeft, 1);
-  digitalWrite(lowBeamRight, 1);
+//digitalWrite(lowBeamLeft, 1);
+//digitalWrite(lowBeamRight, 1);
 
   // Bromsljus aktiverade i början för att visa att bilen står still och väntar på kommandon
-  brakeLightsActivate();
+//brakeLightsActivate();
 }
 
 void loop() {
