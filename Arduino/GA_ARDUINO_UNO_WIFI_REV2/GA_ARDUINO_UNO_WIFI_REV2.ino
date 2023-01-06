@@ -95,10 +95,7 @@ void loop() {
   BLEDevice central = BLE.central();
   if (central) {
     Serial.println("Connected to " + central.address());
-
     while (central.connected()) {
-
-
       if (switchCharacteristic.written()) {
         if (switchCharacteristic.value()) {
           dataFromPhone = switchCharacteristic.value();
@@ -134,8 +131,15 @@ void loop() {
         }
       }
     }
-    Serial.println("Disconnected from " + central.address());
+    bluetoothConnectionLost(central.address());
   }
+}
+
+void bluetoothConnectionLost(String centralAddress) {
+  Wire.beginTransmission(4);
+  Wire.write(4);
+  Wire.endTransmission(4);
+  Serial.println("Disconnected from " + centralAddress);
 }
 
 void sendDataToUNO() {
