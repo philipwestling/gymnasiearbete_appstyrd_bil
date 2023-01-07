@@ -1,6 +1,6 @@
 /* 
 
-Denna kod exekveras på Arduino UNO, och fungerar som en "slave-device" till 
+Denna kod exekveras på Arduino UNO Rev3, och fungerar som en "slave-device" till 
 Arduino UNO WiFi Rev2 som skickar insignaler via följande bibliotek 
 https://www.arduino.cc/reference/en/language/functions/communication/wire/.
 
@@ -9,7 +9,7 @@ och ett för motorerna (https://github.com/adafruit/Adafruit-Motor-Shield-librar
 
 Komponenter:
 Arduino UNO WiFi Rev2
-Arduino UNO
+Arduino UNO Rev3
 L293D Motor Driver Shield
 HS-755HB Servo
 DC-motorer 6V (4 stycken)
@@ -19,19 +19,22 @@ LiPo 18650 3.7V|2200mAh (2 stycken) - Seriekopplade
 
 */
 
+// Ta med nödvändiga bibliotek
 #include <Servo.h>
 #include <AFMotor.h>
 #include <Wire.h>
-Servo servoSteering;
 
+// Använd bibliotek och skapa instanser av klasser 
+Servo servoSteering;
 AF_DCMotor frontLeft(1);
 AF_DCMotor frontRight(4);
 AF_DCMotor rearRight(3);
 AF_DCMotor rearLeft(2);
 
-
+// Servovariabel
 int receiver;
 
+// Sker 1 gång
 void setup() {
   Wire.begin(4);
   Wire.onReceive(dataReceieve);
@@ -43,15 +46,10 @@ void setup() {
 
 void loop() {
   delay(100);
-  
-
-
-
-  // switch-operator beroende på insignal från UNO WiFi
 }
 
+// Konstant dataflöde --> Denna funktion loopas
 void dataReceieve() {
-
   receiver = Wire.read();
   Serial.println(receiver);
   if (receiver > 79 && receiver < 161) {
