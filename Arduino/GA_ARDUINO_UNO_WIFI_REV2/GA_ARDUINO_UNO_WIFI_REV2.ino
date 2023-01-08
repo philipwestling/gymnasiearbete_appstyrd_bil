@@ -53,12 +53,12 @@ void setup() {
   Wire.begin();
   Serial.begin(9600);
   if (!BLE.begin()) {
-    Serial.println("Kunde inte starta bluetoothmodul!");
+    Serial.println("Kunde inte starta Bluetoothmodul!");
 
     while (true)
       ;
   } else {
-    Serial.println("Startar bluetoothmodul!");
+    Serial.println("Startar Bluetoothmodul!");
   }
 
   // Lägg till Characteristic till Service
@@ -89,7 +89,7 @@ void setup() {
   //digitalWrite(backLightLeft, 1);
   //digitalWrite(backLightRight, 1);
 
-  // Bromsljus aktiverade i början för att visa att bilen står still och väntar på kommandon
+  // Bromsljus aktiverade i början för att visa att bilen står stilla och väntar på kommandon
   //brakeLightsActivate();
 }
 
@@ -102,6 +102,7 @@ void loop() {
       if (appStyrdBilCharacteristic.written()) {
         if (appStyrdBilCharacteristic.value()) {
           dataFromPhone = appStyrdBilCharacteristic.value();
+          // Debugging syfte - Serial.println(dataFromPhone)
           Serial.println(dataFromPhone);
           sendDataToUNO();
           switch (dataFromPhone) {
@@ -155,7 +156,6 @@ void sendDataToUNO() {
 
 // Helljus
 void highBeamOnOff() {
-  Serial.println(digitalRead(highBeamLeft));
   digitalWrite(highBeamLeft, !digitalRead(highBeamLeft));
   digitalWrite(highBeamRight, !digitalRead(highBeamRight));
 }
