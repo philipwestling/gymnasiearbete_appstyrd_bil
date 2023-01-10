@@ -27,21 +27,21 @@ BLEService appstyrdBilService("19B10000-E8F2-537E-4F6C-D104768A1214");
 BLEByteCharacteristic appStyrdBilCharacteristic("19B10001-E8F2-537E-4F6C-D104768A1214", BLERead | BLEWrite);
 
 // Lampor fram
-const int highBeamLeft = A0;
-const int highBeamRight = A1;
-const int lowBeamLeft = 2;
-const int lowBeamRight = 3;
-const int frontTurnSignalLeft = 4;
-const int frontTurnSignalRight = 5;
+const int highBeamLeft = 4;
+const int highBeamRight = 9;
+const int lowBeamLeft = 8;
+const int lowBeamRight = 12;
+const int frontTurnSignalLeft = 3;
+const int frontTurnSignalRight = 11;
 
 // Lampor bak
-const int backLightLeft = 6;
-const int backLightRight = 7;
-const int rearTurnSignalLeft = 8;
-const int rearTurnSignalRight = 9;
-const int brakeLightLeft = 10;
-const int brakeLightRight = 11;
-const int reverseLight = 12;
+const int backLightLeft = A2;
+const int backLightRight = A0;
+const int rearTurnSignalLeft = 10;
+const int rearTurnSignalRight = 7;
+const int brakeLightLeft = A5;
+const int brakeLightRight = 6;
+const int reverseLight = A1;
 
 // Lampor övrigt
 const int turnSignalDelayTime = 600;
@@ -80,17 +80,20 @@ void setup() {
   }
   pinMode(A0, OUTPUT);
   pinMode(A1, OUTPUT);
+  pinMode(A2, OUTPUT);
+  pinMode(A5, OUTPUT);
+
 
   // Halvljus konstant på
-  //digitalWrite(lowBeamLeft, 1);
-  //digitalWrite(lowBeamRight, 1);
+  digitalWrite(lowBeamLeft, 1);
+  digitalWrite(lowBeamRight, 1);
 
   // Bakljus konstant på
-  //digitalWrite(backLightLeft, 1);
-  //digitalWrite(backLightRight, 1);
+  digitalWrite(backLightLeft, 1);
+  digitalWrite(backLightRight, 1);
 
   // Bromsljus aktiverade i början för att visa att bilen står stilla och väntar på kommandon
-  //brakeLightsActivate();
+  brakeLightsActivate();
 }
 
 void loop() {
