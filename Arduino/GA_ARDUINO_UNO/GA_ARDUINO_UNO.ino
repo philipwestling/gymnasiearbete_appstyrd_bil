@@ -53,7 +53,6 @@ void dataReceieve() {
  
   if (receiver > 79 && receiver < 161) {
     servoSteering.write(receiver);
-    return;
   } else {
     switch (receiver) {
       case 4:
