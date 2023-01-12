@@ -19,22 +19,21 @@ LiPo 18650 3.7V|2200mAh (2 stycken) - Seriekopplade
 
 */
 
-// Ta med nödvändiga bibliotek
+// Inkludera nödvändiga bibliotek
 #include <Servo.h>
 #include <AFMotor.h>
 #include <Wire.h>
 
-// Använd bibliotek och skapa instanser av klasser 
+// Använd bibliotek och skapa instanser av klasser
 Servo servoSteering;
 AF_DCMotor frontLeft(1);
 AF_DCMotor frontRight(4);
 AF_DCMotor rearRight(3);
 AF_DCMotor rearLeft(2);
 
-// Servovariabel
+// Servovariabel - Värde från SDL ingång
 int receiver;
 
-// Sker 1 gång
 void setup() {
   Wire.begin(4);
   Wire.onReceive(dataReceieve);
@@ -51,9 +50,10 @@ void loop() {
 // Konstant dataflöde --> Denna funktion loopas
 void dataReceieve() {
   receiver = Wire.read();
-  Serial.println(receiver);
+ 
   if (receiver > 79 && receiver < 161) {
     servoSteering.write(receiver);
+    return;
   } else {
     switch (receiver) {
       case 4:
@@ -72,6 +72,45 @@ void dataReceieve() {
         break;
     }
   }
+}
+
+
+
+void tankSteering() {
+  if (receiver == 120) {
+    brake();
+  }
+
+  else if (receiver > 120 && receiver < 161) {
+    tankSteerRight();
+
+  } else if (receiver < 121 && receiver > 79) {
+    tankSteerLeft();
+  } else {
+    brake();
+  }
+}
+
+void tankSteerRight() {
+  frontRight.setSpeed(255);
+  frontLeft.setSpeed(255);
+  rearRight.setSpeed(255);
+  rearLeft.setSpeed(255);
+  frontLeft.run(BACKWARD);
+  frontRight.run(FORWARD);
+  rearRight.run(FORWARD);
+  rearLeft.run(BACKWARD);
+}
+
+void tankSteerLeft() {
+  frontRight.setSpeed(255);
+  frontLeft.setSpeed(255);
+  rearRight.setSpeed(255);
+  rearLeft.setSpeed(255);
+  frontLeft.run(FORWARD);
+  frontRight.run(BACKWARD);
+  rearRight.run(BACKWARD);
+  rearLeft.run(FORWARD);
 }
 
 void forward() {
@@ -94,18 +133,6 @@ void backward() {
   frontLeft.run(BACKWARD);
   rearLeft.run(BACKWARD);
   rearRight.run(BACKWARD);
-}
-
-void left() {
-  servoSteering.write(160);
-}
-
-void right() {
-  servoSteering.write(80);
-}
-
-void straight() {
-  servoSteering.write(95);
 }
 
 void brake() {
